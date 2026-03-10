@@ -1,0 +1,38 @@
+.hero {
+  position: relative;
+  height: 572px;
+  width: 100%;
+
+  @include flex-center();
+}
+
+.bg {
+  object-fit: cover;
+  z-index: -2;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  position: absolute;
+  bottom: 0;
+  left: 51.5%;
+  transform: translateX(-50%);
+  width: fluid(459, 320);
+  aspect-ratio: 459 / 286;
+}

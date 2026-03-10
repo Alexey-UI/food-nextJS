@@ -1,0 +1,112 @@
+.header {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 100;
+}
+
+.container {
+  max-width: var(--container-width);
+  height: 64px;
+  margin: 0 auto;
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 120%;
+  color: var(--color-text-primary);
+}
+
+.header__logoIcon {
+  width: 32px;
+  height: 32px;
+
+  @include flex-center();
+}
+
+.header__nav {
+  display: flex;
+  gap: 16px;
+}
+
+.header__nav a {
+  text-decoration: none;
+  color: var(--color-text-primary);
+  line-height: 125%;
+  transition: var(--transition-duration) ease;
+}
+
+.header__nav a:hover {
+  color: var(--brand-hover);
+  transform: scale(1.05);
+}
+
+.header__nav .active {
+  color: var(--brand-active);
+  font-weight: 600;
+}
+
+.header__actions {
+  display: flex;
+  gap: 18px;
+}
+
+.header__actions img {
+  align-self: center;
+}
+
+.header__icon {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.header__heart {
+  width: 21px;
+  height: 21px;
+}
+
+@media (max-width: 1024px) {
+  .header__nav {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+
+    flex-direction: column;
+    background: var(--color-header-bg);
+    padding: 20px;
+    gap: 20px;
+
+    transform: translateY(-20px);
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+      transform 0.4s ease,
+      opacity 0.4s ease,
+      visibility 0.4s ease;
+  }
+
+  .open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+}

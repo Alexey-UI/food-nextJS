@@ -1,0 +1,33 @@
+.directions {
+  margin-top: 48px;
+  padding-bottom: 53px;
+  max-width: 737px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  margin-bottom: 24px;
+}
+
+.steps {
+  @include flex-column();
+  gap: 16px;
+}
+
+.step {
+  @include flex-column();
+  gap: 8px;
+}
+
+.stepTitle {
+  font-weight: 600;
+  line-height: 125%;
+}
+
+.stepText {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+}

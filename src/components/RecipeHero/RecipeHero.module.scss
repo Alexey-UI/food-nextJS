@@ -1,0 +1,72 @@
+.recipeHero {
+  margin-top: 40px;
+  position: relative;
+
+  h1 {
+    font-weight: 700;
+    @include fluid-text(44, 20);
+    line-height: 109%;
+    margin-bottom: fluid(40, 20);
+    margin-top: fluid(50, 25);
+    padding-left: 40px;
+  }
+
+  svg {
+    position: absolute;
+    top: 7px;
+    left: -8px;
+    color: var(--brand);
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: clamp(280px, 40vw, 448px) 1fr;
+  gap: fluid(166, 20);
+  align-items: center;
+}
+
+.imageWrapper {
+  width: 100%;
+  max-width: 448px;
+  aspect-ratio: 448 / 298;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 50px;
+  column-gap: fluid(100, 20);
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+
+  strong {
+    font-size: 16px;
+    color: var(--brand);
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .imageWrapper {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,43 @@
+:root {
+  --color-header-bg: #ffffff;
+  --color-text-primary: #000000;
+  --color-main-bg: rgba(255, 192, 118, 0.23);
+  --color-reg-log-bg: rgba(189, 112, 21, 0.23);
+  --button-primary-text: #fff;
+  --button-primary-bg: #b5460f;
+  --button-primary-bg-hover: rgba(181, 70, 15, 0.7);
+
+
+  --input-bg: #fff;
+  --input-placeholder: #afadb5;
+  --input-border-focus: #b5460f;
+
+
+  --container-width: 1240px;
+
+  --font-family-base: var(--font-roboto), sans-serif;
+
+  --breakpoint-sm: 375px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+
+  --brand: #b5460f;
+  --brand-active: #872d01;
+  --brand-hover: rgba(181, 70, 15, 0.7);
+
+  --transition-duration: 0.2s;
+  --transition-duration-longer: 0.4s;
+
+  --container-padding-x: 24px;
+
+  --text-primary: #000;
+  --text-secondary: #afadb5;
+  --text-accent: #b5460f;
+}

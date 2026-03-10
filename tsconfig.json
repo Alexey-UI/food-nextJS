@@ -18,8 +18,11 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "abstracts": ["src/styles/abstracts/_index.scss"],
+      "abstracts/*": ["src/styles/abstracts/*"],
+      "@/*": ["src/*"]
     }
   },
   "include": [

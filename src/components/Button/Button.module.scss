@@ -1,0 +1,41 @@
+.button {
+  position: relative;
+  @include flex-center(true);
+  border-radius: 10px;
+  gap: 8px;
+
+  background-color: var(--brand);
+  border: none;
+
+  color: var(--button-primary-text);
+
+  padding: 14px 20px;
+  font-size: 18px;
+  font-weight: 400;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled):not(.button--disabled) {
+    background-color: var(--brand-hover);
+  }
+
+  &:active:not(:disabled):not(.button--disabled) {
+    background-color: var(--brand-active);
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: var(--brand);
+  }
+
+  &__content {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.loaderWhite {
+  color: var(--button-primary-text);
+}

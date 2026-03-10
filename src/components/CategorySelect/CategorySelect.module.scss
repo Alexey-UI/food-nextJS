@@ -1,0 +1,52 @@
+.dropdown {
+  position: relative;
+  width: fluid(352, 320);
+  margin-left: auto;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+
+  background: var(--button-primary-text);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+
+  z-index: 100;
+  overflow: hidden;
+}
+
+.option {
+  padding: 14px 12px;
+  cursor: pointer;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.option:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.optionSelected {
+  color: var(--brand);
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+.inputActive {
+  border-color: var(--brand);
+}

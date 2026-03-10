@@ -1,0 +1,23 @@
+.loaderWrapper {
+  @include flex-center();
+  color: var(--brand);
+}
+
+.loader {
+  display: block;
+}
+
+.sizeL {
+  width: 60px;
+  height: 60px;
+}
+
+.sizeM {
+  width: 48px;
+  height: 48px;
+}
+
+.sizeS {
+  width: 24px;
+  height: 24px;
+}

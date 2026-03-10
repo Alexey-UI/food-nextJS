@@ -1,0 +1,19 @@
+.recipeSummary {
+  margin-top: 48px;
+}
+
+.content {
+  background: rgba(181, 70, 15, 0.33);
+  padding: 36px 36px 29px;
+  border-radius: 10px;
+  line-height: 125%;
+
+  a {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  strong {
+    font-weight: 700;
+  }
+}

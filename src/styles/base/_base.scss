@@ -1,0 +1,44 @@
+@use "../abstracts/index" as *;
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-main-bg);
+}
+
+a,
+button,
+label,
+input,
+textarea,
+select,
+svg * {
+  transition-duration: var(--transition-duration);
+}
+
+a {
+  color: inherit;
+
+  @include hover {
+    color: var(--brand-hover);
+  }
+
+  &[class] {
+    text-decoration: none;
+  }
+}
+
+:focus-visible {
+  @include focus-visible;
+}
+
+:has(.swiper) {
+  min-width: 0;
+}
+
+.header,
+.content > *:not(:last-child),
+.footer {
+  display: none !important;
+}

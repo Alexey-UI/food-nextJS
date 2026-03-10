@@ -1,0 +1,73 @@
+.recipeDetails {
+  margin-top: 48px;
+  padding-bottom: 60px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1.25fr 2px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.divider {
+  background-color: var(--brand);
+  width: 2px;
+  height: 90%;
+  justify-self: center;
+  position: relative;
+  margin-top: 30px;
+
+  &::after {
+    content: url('/icons/point.svg');
+    position: absolute;
+    top: -20px;
+    left: calc(50% - 3px);
+    width: 7px;
+    height: 7px;
+  }
+}
+
+.section1,
+.section2 {
+  h2 {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+    margin-bottom: 24px;
+  }
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  column-gap: 10px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+    line-height: 125%;
+  }
+}
+
+@media (max-width: 768px) {
+  .divider {
+    display: none;
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 375px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}
