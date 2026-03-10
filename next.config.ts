@@ -3,11 +3,7 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   sassOptions: {
-    includePaths: [path.join(process.cwd(), "src/styles")],
-
-    additionalData: `
-      @use "abstracts" as *;
-    `,
+    includePaths: [path.join(process.cwd(), "src")],
   },
   images: {
     remotePatterns: [

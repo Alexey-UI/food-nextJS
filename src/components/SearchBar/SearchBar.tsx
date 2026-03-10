@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import { useSearchParams } from "next/navigation";
 
 import styles from "./SearchBar.module.scss";
@@ -8,6 +8,9 @@ import styles from "./SearchBar.module.scss";
 import Button from "@/components/Button";
 import Image from "next/image";
 import {useDebounce} from "@/shared/hooks/useDebounce";
+import { observer } from "mobx-react-lite";
+import {useStores} from "@/providers/StoreProvider";
+
 
 type SearchBarProps = {
   updateParams: (params: Record<string, string | undefined>) => void;
@@ -17,13 +20,13 @@ const SearchBar = ({ updateParams }: SearchBarProps) => {
   const searchParams = useSearchParams();
   const searchFromUrl = searchParams.get("search") || "";
 
-  const [value, setValue] = useState(searchFromUrl);
+  const { searchStore } = useStores();
 
-  const debounced = useDebounce(value, 1000);
+  const debounced = useDebounce(searchStore.value, 1000);
 
   useEffect(() => {
-    setValue(searchFromUrl);
-  }, [searchFromUrl]);
+    searchStore.setValue(searchFromUrl);
+  }, [searchFromUrl, searchStore]);
 
     useEffect(() => {
       if (debounced === searchFromUrl) return;
@@ -35,7 +38,7 @@ const SearchBar = ({ updateParams }: SearchBarProps) => {
 
   const handleSearch = () => {
     updateParams({
-      search: value || undefined,
+      search: searchStore.value || undefined,
     });
   };
 
@@ -51,8 +54,8 @@ const SearchBar = ({ updateParams }: SearchBarProps) => {
         <input
           type="text"
           placeholder="Enter dishes"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={searchStore.value}
+          onChange={(e) => searchStore.setValue(e.target.value)}
           onKeyDown={handleKeyDown}
           className={styles.input}
         />
@@ -71,5 +74,5 @@ const SearchBar = ({ updateParams }: SearchBarProps) => {
   );
 };
 
-export default SearchBar;
+export default observer(SearchBar);
 

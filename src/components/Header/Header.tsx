@@ -1,10 +1,10 @@
 "use client";
 
 import classNames from "classnames";
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
+import { observer } from "mobx-react-lite";
 
 import styles from "./Header.module.scss";
 
@@ -14,9 +14,10 @@ import userIcon from "@/assets/userIcon.svg";
 
 import BurgerButton from "@/components/BurgerButton";
 import { useAuth } from "@/shared/auth/AuthContext";
+import {useStores} from "@/providers/StoreProvider";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { uiStore } = useStores();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -27,7 +28,11 @@ const Header = () => {
     <header className={styles.header}>
       <div className={classNames(styles.container)}>
         <div className={styles.header__left}>
-          <Link href="/" className={styles.header__logo}>
+          <Link
+            href="/"
+            className={styles.header__logo}
+            onClick={() => uiStore.closeMobileMenu()}
+          >
             <div className={styles.header__logoIcon}>
               <Image src={logoIcon} alt="Logo" />
             </div>
@@ -37,13 +42,10 @@ const Header = () => {
 
           <nav
             className={classNames(styles.header__nav, {
-              [styles.open]: isOpen,
+              [styles.open]: uiStore.mobileMenuOpen,
             })}
           >
-            <Link
-              href="/"
-              className={pathname === "/" ? styles.active : ""}
-            >
+            <Link href="/" className={pathname === "/" ? styles.active : ""}>
               Recipes
             </Link>
 
@@ -82,7 +84,9 @@ const Header = () => {
             src={heartIcon}
             alt="Favorites"
             className={classNames(styles.header__icon, styles.header__heart)}
-            onClick={() => router.push(isAuthenticated ? "/favorites" : "/login")}
+            onClick={() =>
+              router.push(isAuthenticated ? "/favorites" : "/login")
+            }
           />
 
           <Image
@@ -97,8 +101,8 @@ const Header = () => {
           />
 
           <BurgerButton
-            isOpen={isOpen}
-            onClick={() => setIsOpen((prev) => !prev)}
+            isOpen={uiStore.mobileMenuOpen}
+            onClick={() => uiStore.toggleMobileMenu()}
           />
         </div>
       </div>
@@ -106,4 +110,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default observer(Header);

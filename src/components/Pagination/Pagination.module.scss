@@ -1,3 +1,5 @@
+@use "../../styles/abstracts" as *;
+
 .pagination {
   @include flex-center();
   gap: 30px;

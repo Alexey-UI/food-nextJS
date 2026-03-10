@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 
-import { getRecipeByDocumentId } from "@/shared/api/recipes.api";
 import {dehydrate, HydrationBoundary, QueryClient} from "@tanstack/react-query";
 import {recipeKeys} from "@/shared/queryKeys";
 import RecipeClient from "@/app/recipes/[id]/RecipeClient";
+import {getRecipeByDocumentIdServer} from "@/shared/api/recipes.server";
 
 
 export default async function RecipePage({params}: {
@@ -15,7 +15,7 @@ export default async function RecipePage({params}: {
 
   await queryClient.prefetchQuery({
     queryKey: recipeKeys.detail(id),
-    queryFn: () => getRecipeByDocumentId(id),
+    queryFn: () => getRecipeByDocumentIdServer(id),
   });
 
   const recipe = queryClient.getQueryData(recipeKeys.detail(id));

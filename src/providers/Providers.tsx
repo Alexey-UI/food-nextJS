@@ -4,6 +4,7 @@ import {useState} from 'react'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
 import {AuthProvider} from '@/shared/auth/AuthContext'
+import {StoreProvider} from "@/providers/StoreProvider";
 
 export default function Providers({children}: {
   children: React.ReactNode
@@ -23,7 +24,9 @@ export default function Providers({children}: {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        {children}
+        <StoreProvider>
+          {children}
+        </StoreProvider>
       </AuthProvider>
     </QueryClientProvider>
   )

@@ -1,9 +1,9 @@
 import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import RecipesClient from "./RecipesClient";
-import { getRecipes } from "@/shared/api/recipes.api";
-import { getFavorites } from "@/shared/api/favorites.api";
+import { getRecipesServer } from "@/shared/api/recipes.server";
+import { getFavoritesServer } from "@/shared/api/favorites.server";
+import { getCategoriesServer } from "@/shared/api/categories.server";
 import {getServerToken} from "@/lib/auth/getServerToken";
-import {getCategories} from "@/shared/api/categories.api";
 import {recipesKeys} from "@/shared/queryKeys";
 
 
@@ -35,7 +35,7 @@ export default async function Page({ searchParams }: PageProps) {
     queryClient.prefetchQuery({
       queryKey: recipesKeys.list(page, pageSize, search, categoryId),
       queryFn: () =>
-        getRecipes({
+        getRecipesServer({
           page,
           limit: pageSize,
           search,
@@ -46,7 +46,7 @@ export default async function Page({ searchParams }: PageProps) {
 
     queryClient.prefetchQuery({
       queryKey: ["categories"],
-      queryFn: () => getCategories(),
+      queryFn: () => getCategoriesServer(),
       staleTime: 60 * 1000,
     }),
   ];
@@ -55,7 +55,7 @@ export default async function Page({ searchParams }: PageProps) {
     queries.push(
       queryClient.prefetchQuery({
         queryKey: ["favorites"],
-        queryFn: () => getFavorites(token),
+        queryFn: () => getFavoritesServer(token),
         staleTime: 60 * 1000,
       })
     );

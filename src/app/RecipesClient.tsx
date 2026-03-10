@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 
 import CategorySelect from "@/components/CategorySelect";
 import Hero from "@/components/Hero";

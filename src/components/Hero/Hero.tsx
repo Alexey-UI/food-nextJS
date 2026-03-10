@@ -16,7 +16,7 @@ const Hero = () => {
 
       <div className={styles.container}>
         <div className={styles.title}>
-          <img
+          <Image
             src="/images/recipesTitle.svg"
             alt="Recipes"
             width={459}

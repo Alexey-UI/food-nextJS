@@ -1,12 +1,15 @@
 "use client";
 
 import classNames from "classnames";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
 import styles from "./CategorySelect.module.scss";
 import Input from "@/components/Input";
 import { useCategoriesQuery } from "@/shared/hooks/useCategoriesQuery";
+
+import { observer } from "mobx-react-lite";
+import {useStores} from "@/providers/StoreProvider";
 
 type Option = {
   key: string;
@@ -19,13 +22,13 @@ type CategorySelectProps = {
 
 const CategorySelect = ({ updateParams }: CategorySelectProps) => {
   const { data, isLoading } = useCategoriesQuery();
-  const categories = useMemo(() => {return data?.data ?? []}, [data]);
+  const categories = useMemo(() => data?.data ?? [], [data]);
 
   const searchParams = useSearchParams();
-
   const categoryIdFromUrl = searchParams.get("categoryId");
 
-  const [isOpen, setIsOpen] = useState(false);
+  const { dropdownStore } = useStores();
+
   const rootRef = useRef<HTMLDivElement>(null);
 
   const selected = useMemo(() => {
@@ -48,29 +51,33 @@ const CategorySelect = ({ updateParams }: CategorySelectProps) => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (!rootRef.current?.contains(e.target as Node)) {
-        setIsOpen(false);
+        dropdownStore.closeCategory();
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [dropdownStore]);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
+      if (e.key === "Escape") {
+        dropdownStore.closeCategory();
+      }
     };
 
     document.addEventListener("keydown", handleEsc);
+
     return () => document.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [dropdownStore]);
 
   const handleSelect = (option: Option) => {
     updateParams({
       categoryId: option.key || undefined,
     });
 
-    setIsOpen(false);
+    dropdownStore.closeCategory();
   };
 
   return (
@@ -79,14 +86,14 @@ const CategorySelect = ({ updateParams }: CategorySelectProps) => {
         value={selected?.value || ""}
         placeholder={isLoading ? "Loading..." : "Categories"}
         readOnly
-        onFocus={() => setIsOpen((prev) => !prev)}
+        onFocus={dropdownStore.toggleCategory}
         className={classNames({
-          [styles.inputActive]: isOpen,
+          [styles.inputActive]: dropdownStore.categoryOpen,
         })}
         afterSlot={
           <svg
             className={classNames(styles.arrow, {
-              [styles.arrowOpen]: isOpen,
+              [styles.arrowOpen]: dropdownStore.categoryOpen,
             })}
             width="20"
             height="11"
@@ -103,7 +110,7 @@ const CategorySelect = ({ updateParams }: CategorySelectProps) => {
         }
       />
 
-      {isOpen && (
+      {dropdownStore.categoryOpen && (
         <div className={styles.menu}>
           {options.map((option) => (
             <div
@@ -115,7 +122,7 @@ const CategorySelect = ({ updateParams }: CategorySelectProps) => {
               })}
               onClick={() => handleSelect(option)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") handleSelect(option)
+                if (e.key === "Enter") handleSelect(option);
               }}
               tabIndex={0}
             >
@@ -128,4 +135,4 @@ const CategorySelect = ({ updateParams }: CategorySelectProps) => {
   );
 };
 
-export default CategorySelect;
+export default observer(CategorySelect);

@@ -1,3 +1,5 @@
+@use "../../styles/abstracts" as *;
+
 .burgerButton {
   @include flex-center(true);
   @include square(51px);
