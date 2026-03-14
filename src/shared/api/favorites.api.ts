@@ -7,9 +7,7 @@ export const getFavorites = async (token?: Promise<string | null> | string) => {
     headers: token ? { Authorization: `Bearer ${token}` } : undefined,
   });
 
-  return data.map((item: ItemType) => {
-    return item.recipe.id
-  });
+  return data.map((item: ItemType) => item.recipe);
 };
 
 export const addFavorite = async (recipeId: number, token?: string) => {

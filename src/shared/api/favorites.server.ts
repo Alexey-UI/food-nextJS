@@ -1,6 +1,6 @@
 import { ItemType } from "@/shared/api/types";
 
-export const getFavoritesServer = async (token?: Promise<string | null>) => {
+export const getFavoritesServer = async (token?: string) => {
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/favorites`,
@@ -18,5 +18,5 @@ export const getFavoritesServer = async (token?: Promise<string | null>) => {
 
   const data = await res.json();
 
-  return data.map((item: ItemType) => item.recipe.id);
+  return data.map((item: ItemType) => item.recipe);
 };

@@ -81,3 +81,10 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@mixin section-heading {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  margin-bottom: 24px;
+}

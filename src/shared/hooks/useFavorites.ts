@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import {
   getFavorites,
@@ -9,67 +9,86 @@ import {
   removeFavorite,
 } from "@/shared/api/favorites.api";
 
-import { getToken } from "@/lib/auth/authStorage";
+import type { RecipeListItem } from "@/shared/api/types";
 
-export const useFavorites = () => {
+export const useFavorites = (token: string | null) => {
   const queryClient = useQueryClient();
-  const token = getToken();
-
   const [loadingId, setLoadingId] = useState<number | undefined>();
 
   const favoritesQuery = useQuery({
-    queryKey: ["favorites"],
+    queryKey: ["favorites", token],
     queryFn: () => getFavorites(token as string),
     enabled: !!token,
+    select: (data: RecipeListItem[]) => ({
+      recipes: data,
+      ids: data.map((r) => r.id),
+    }),
   });
 
+  // const favoriteRecipes: RecipeListItem[] = favoritesQuery.data ?? [];
+  //
+  // const favorites = useMemo(
+  //   () => favoriteRecipes.map((r) => r.id),
+  //   [favoriteRecipes]
+  // );
+
+  const favoriteRecipes = favoritesQuery.data?.recipes ?? [];
+  const favorites = favoritesQuery.data?.ids ?? [];
+
   const toggleFavoriteMutation = useMutation({
-    mutationFn: async (recipeId: number) => {
-      const current = favoritesQuery.data ?? [];
-      const isFavorite = current.includes(recipeId);
+    mutationFn: async (recipe: RecipeListItem) => {
+      const current: RecipeListItem[] = favoriteRecipes ?? [];
+      const isFavorite = current.some((r) => r.id === recipe.id);
 
       if (isFavorite) {
-        await removeFavorite(recipeId, token || undefined);
+        await removeFavorite(recipe.id, token || undefined);
       } else {
-        await addFavorite(recipeId, token || undefined);
+        await addFavorite(recipe.id, token || undefined);
       }
 
-      return recipeId;
+      return recipe;
     },
 
-    onMutate: async (recipeId: number) => {
-      setLoadingId(recipeId);
+    onMutate: async (recipe: RecipeListItem) => {
+      setLoadingId(recipe.id);
 
-      await queryClient.cancelQueries({ queryKey: ["favorites"] });
+      await queryClient.cancelQueries({ queryKey: ["favorites", token] });
 
       const previousFavorites =
-        queryClient.getQueryData<number[]>(["favorites"]) ?? [];
+        queryClient.getQueryData<RecipeListItem[]>(["favorites", token]) ?? [];
 
-      const isFavorite = previousFavorites.includes(recipeId);
+      const isFavorite = previousFavorites.some((r) => r.id === recipe.id);
 
       const newFavorites = isFavorite
-        ? previousFavorites.filter((id) => id !== recipeId)
-        : [...previousFavorites, recipeId];
+        ? previousFavorites.filter((r) => r.id !== recipe.id)
+        : [...previousFavorites, recipe];
 
-      queryClient.setQueryData(["favorites"], newFavorites);
+      queryClient.setQueryData(["favorites", token], newFavorites);
 
       return { previousFavorites };
     },
 
-    onError: (_err, _recipeId, context) => {
+    onError: (_err, _recipe, context) => {
       if (context?.previousFavorites) {
-        queryClient.setQueryData(["favorites"], context.previousFavorites);
+        queryClient.setQueryData(
+          ["favorites", token],
+          context.previousFavorites
+        );
       }
     },
 
     onSettled: () => {
       setLoadingId(undefined);
-      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+
+      queryClient.invalidateQueries({
+        queryKey: ["favorites", token],
+      });
     },
   });
 
   return {
-    favorites: favoritesQuery.data ?? [],
+    favorites,
+    favoriteRecipes,
     toggleFavorite: toggleFavoriteMutation.mutate,
     loadingId,
     isLoading: favoritesQuery.isLoading,

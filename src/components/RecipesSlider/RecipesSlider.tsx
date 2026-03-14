@@ -13,7 +13,7 @@ type RecipesSliderProps = {
   changePage: (page: number) => void;
 
   favorites: number[];
-  toggleFavorite: (id: number) => void;
+  toggleFavorite: (recipe: RecipeListItem) => void;
   loadingId?: number;
 };
 

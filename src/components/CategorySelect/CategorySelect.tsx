@@ -22,6 +22,7 @@ type CategorySelectProps = {
 
 const CategorySelect = ({ updateParams }: CategorySelectProps) => {
   const { data, isLoading } = useCategoriesQuery();
+  console.log(data)
   const categories = useMemo(() => data?.data ?? [], [data]);
 
   const searchParams = useSearchParams();

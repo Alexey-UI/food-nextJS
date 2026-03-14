@@ -1,7 +1,9 @@
+@use "../../styles/abstracts" as *;
+
 .card {
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--color-surface);
   cursor: pointer;
   width: fluid-to-laptop(360, 340);
   height: 100%;

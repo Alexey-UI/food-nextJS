@@ -62,6 +62,13 @@ export type RecipeListItem = {
   category: RecipeCategory;
 };
 
+export type RecipeForCat = Omit<
+  RecipeListItem,
+  "images" | "ingradients" | "category"
+> & {
+  length: number;
+};
+
 export type RecipeDetails = {
   directions: RecipeDirections[];
   equipments: RecipeEquipments[];

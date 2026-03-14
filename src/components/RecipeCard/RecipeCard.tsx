@@ -15,7 +15,7 @@ export type RecipeCardProps = {
   className?: string;
   recipe: RecipeListItem;
   isFavorite: boolean;
-  toggleFavorite: (id: number) => void;
+  toggleFavorite: (recipe: RecipeListItem) => void;
   favoriteLoading: boolean;
 };
 
@@ -38,7 +38,7 @@ const RecipeCard = (
 
     if (favoriteLoading) return;
 
-    toggleFavorite(recipe.id);
+    toggleFavorite(recipe);
   };
 
   const imageUrl =
@@ -130,4 +130,4 @@ const RecipeCard = (
   );
 };
 
-export default RecipeCard;
+export default React.memo(RecipeCard);

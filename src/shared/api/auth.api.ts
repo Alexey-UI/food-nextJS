@@ -4,7 +4,11 @@ export type User = {
   id: number;
   username: string;
   email: string;
+  avatar?: {
+    url: string;
+  };
 };
+
 
 export const loginRequest = async (
   identifier: string,

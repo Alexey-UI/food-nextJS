@@ -12,11 +12,11 @@ import {useResponsivePageSize} from "@/shared/hooks/useResponsivePageSize";
 import {useFavorites} from "@/shared/hooks/useFavorites";
 
 
-export default function RecipesClient() {
+export default function RecipesClient({ token }: { token: string | null }) {
   useResponsivePageSize();
 
   const recipesState = useRecipesQuery();
-  const favoritesState = useFavorites();
+  const favoritesState = useFavorites(token);
 
   return (
     <>

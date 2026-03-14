@@ -1,22 +1,26 @@
-"use client";
-import { useFavorites } from '@/shared/hooks/useFavorites';
-import styles from './FavoritesPage.module.scss';
+import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
-const FavoritesPage = () => {
-  const { favorites } = useFavorites();
+import { getServerToken } from "@/lib/auth/getServerToken";
+import { getFavoritesServer } from "@/shared/api/favorites.server";
+
+import FavoritesClient from "./FavoritesClient";
+
+export default async function FavoritesPage() {
+  const token = await getServerToken();
+
+  const queryClient = new QueryClient();
+
+  if (token) {
+    await queryClient.prefetchQuery({
+      queryKey: ["favorites", token],
+      queryFn: () => getFavoritesServer(token),
+      staleTime: 60 * 1000,
+    });
+  }
+
   return (
-    <div className={styles.wrapper}>
-      <h1 className={styles.title}>My Favorites</h1>
-
-      <div className={styles.grid}>
-        {favorites.map((id: number) => (
-          <div key={id} className={styles.card}>
-            Recipe ID: {id}
-          </div>
-        ))}
-      </div>
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <FavoritesClient token={token} />
+    </HydrationBoundary>
   );
-};
-
-export default FavoritesPage;
+}

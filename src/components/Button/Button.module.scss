@@ -16,7 +16,7 @@
   font-weight: 400;
 
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-duration) ease;
 
   &:hover:not(:disabled):not(.button--disabled) {
     background-color: var(--brand-hover);

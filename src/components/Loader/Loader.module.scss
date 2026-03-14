@@ -1,3 +1,5 @@
+@use "../../styles/abstracts" as *;
+
 .loaderWrapper {
   @include flex-center();
   color: var(--brand);

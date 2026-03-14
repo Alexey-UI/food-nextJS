@@ -21,7 +21,7 @@ export default async function Page({ searchParams }: PageProps) {
   const params = await searchParams;
 
   const queryClient = new QueryClient();
-  const token = getServerToken();
+  const token = await getServerToken();
 
   const page = Number(params?.page) || 1;
   const search = params?.search;
@@ -65,7 +65,7 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <RecipesClient />
+      <RecipesClient token={token} />
     </HydrationBoundary>
   );
 }

@@ -23,60 +23,7 @@
   }
 
   &--withSlot {
-    .inputWrapper {
-      position: relative;
-      display: flex;
-      width: 352px;
-      height: 52px;
-
-      border: 1px solid transparent;
-      background: var(--button-primary-text);
-      overflow: hidden;
-
-      box-sizing: border-box;
-
-      &:focus-within {
-        border-color: var(--brand);
-      }
-
-      &--disabled {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-
-      &--withSlot {
-        // -_-
-      }
-    }
-
-    .input {
-      width: 100%;
-      height: 100%;
-      padding: 16px 44px 16px 12px;
-
-      font-size: 16px;
-      line-height: 125%;
-
-      border: none;
-      outline: none;
-      background: transparent;
-
-      &::placeholder {
-        color: var(--text-secondary);
-      }
-    }
-
-    .afterSlot {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 44px;
-      height: 100%;
-
-      @include flex-center();
-
-      pointer-events: none;
-    }
+    // styles for .input and .afterSlot are inherited from their own rules above
   }
 }
 
