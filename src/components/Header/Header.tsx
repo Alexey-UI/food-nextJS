@@ -81,6 +81,7 @@ const Header = () => {
 
         <div className={styles.header__actions}>
           <Image
+            id="favorites-icon"
             src={heartIcon}
             alt="Favorites"
             className={classNames(styles.header__icon, styles.header__heart)}

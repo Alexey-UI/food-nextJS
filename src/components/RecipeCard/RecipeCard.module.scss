@@ -1,6 +1,7 @@
 @use "../../styles/abstracts" as *;
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   background: var(--color-surface);
@@ -13,6 +14,12 @@
   &:hover {
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
   }
+}
+
+.cardLink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .imageWrapper {
@@ -62,6 +69,8 @@
 .action {
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .cardText {

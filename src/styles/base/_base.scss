@@ -42,3 +42,15 @@ a {
 .footer {
   display: none !important;
 }
+
+
+
+.flying-heart {
+  width: 18px;
+  height: 18px;
+
+  background: #ff1a46;
+
+  mask: url("/icons/heartAnimation.svg") center / contain no-repeat;
+  -webkit-mask: url("/icons/heartAnimation.svg") center / contain no-repeat;
+}

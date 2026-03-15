@@ -2,14 +2,15 @@
 
 import classNames from "classnames";
 import React from "react";
-import {useRouter} from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 import Text from "../Text";
 import styles from "./RecipeCard.module.scss";
 
 import Button from "@/components/Button";
 import type {RecipeListItem} from "@/shared/api/types";
+import {flyToFavorites} from "@/shared/animations/flyToFavorites";
 
 export type RecipeCardProps = {
   className?: string;
@@ -27,16 +28,15 @@ const RecipeCard = (
     toggleFavorite,
     favoriteLoading,
   }: RecipeCardProps) => {
-  const router = useRouter();
 
-  const handleNavigate = () => {
-    router.push(`/recipes/${recipe.documentId}`);
-  };
+  console.log("recipeCard rerender");
 
   const handleSaveClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-
     if (favoriteLoading) return;
+
+    if (!isFavorite) {
+      flyToFavorites(e.currentTarget);
+    }
 
     toggleFavorite(recipe);
   };
@@ -49,15 +49,13 @@ const RecipeCard = (
     .join(" + ");
 
   return (
-    <div
-      className={classNames(styles.card, className)}
-      role="button"
-      tabIndex={0}
-      onClick={handleNavigate}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") handleNavigate();
-      }}
-    >
+    <div className={classNames(styles.card, className)}>
+
+      <Link
+        href={`/recipes/${recipe.documentId}`}
+        className={styles.cardLink}
+      />
+
       <div className={styles.imageWrapper}>
         <Image
           className={styles.image}
@@ -118,11 +116,7 @@ const RecipeCard = (
             onClick={handleSaveClick}
             disabled={favoriteLoading}
           >
-            {favoriteLoading
-              ? "Saving..."
-              : isFavorite
-                ? "Saved"
-                : "Save"}
+            {isFavorite ? "Saved" : "Save"}
           </Button>
         </div>
       </div>

@@ -1,8 +1,8 @@
 "use client";
 
-import {useCallback, useMemo} from "react";
+import {useCallback, useEffect, useMemo} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 
 import { getRecipes } from "@/shared/api/recipes.api";
 import {recipesKeys} from "@/shared/queryKeys";
@@ -11,6 +11,7 @@ import {recipesKeys} from "@/shared/queryKeys";
 export const useRecipesQuery = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
 
   const pageSize = Number(searchParams.get("pageSize")) || 9;
 
@@ -30,6 +31,7 @@ export const useRecipesQuery = () => {
         categoryId,
       }),
     placeholderData: (prev) => prev,
+
   });
 
   const total = query.data?.meta.pagination.total ?? 0;
@@ -37,6 +39,23 @@ export const useRecipesQuery = () => {
   const totalPages = useMemo(() => {
     return Math.ceil(total / pageSize);
   }, [total, pageSize]);
+
+  useEffect(() => {
+    if (!query.data) return;
+
+    if (page < totalPages) {
+      queryClient.prefetchQuery({
+        queryKey: recipesKeys.list(page + 1, pageSize, search, categoryId),
+        queryFn: () =>
+          getRecipes({
+            page: page + 1,
+            limit: pageSize,
+            search,
+            categoryId,
+          }),
+      });
+    }
+  }, [page, totalPages, pageSize, search, categoryId, queryClient, query.data]);
 
   const updateParams = useCallback((newParams: Record<string, string | undefined>) => {
     const params = new URLSearchParams(searchParams.toString());

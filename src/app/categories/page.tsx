@@ -1,19 +1,13 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { useCategoriesQuery } from "@/shared/hooks/useCategoriesQuery";
+import { getCategoriesServer } from "@/shared/api/categories.server";
 
 import styles from "./CategoriesPage.module.scss";
 
-export default function CategoriesPage() {
-  const { data, isLoading } = useCategoriesQuery();
-
+export default async function CategoriesPage() {
+  const data = await getCategoriesServer();
   const categories = data?.data ?? [];
 
-  if (isLoading) return <div className={styles.loading}>Loading...</div>;
-
-  console.log(categories[0].image, "dfghjkl")
   return (
     <main className={styles.page}>
       <div className="container">

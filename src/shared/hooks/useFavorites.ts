@@ -25,13 +25,6 @@ export const useFavorites = (token: string | null) => {
     }),
   });
 
-  // const favoriteRecipes: RecipeListItem[] = favoritesQuery.data ?? [];
-  //
-  // const favorites = useMemo(
-  //   () => favoriteRecipes.map((r) => r.id),
-  //   [favoriteRecipes]
-  // );
-
   const favoriteRecipes = favoritesQuery.data?.recipes ?? [];
   const favorites = favoritesQuery.data?.ids ?? [];
 
