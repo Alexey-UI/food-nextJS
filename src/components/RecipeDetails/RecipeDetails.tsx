@@ -29,7 +29,7 @@ const RecipeDetails = ({ ingradients, equipment }: RecipeDetailsProps) => {
             {ingradients?.map((item) => (
               <li key={item.id}>
                 <Image
-                  src="/icons/bellIcon.svg"
+                  src="/icons/beLLicon.svg"
                   alt="bell"
                   width={20}
                   height={20}
