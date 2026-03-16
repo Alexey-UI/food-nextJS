@@ -29,8 +29,6 @@ const RecipeCard = (
     favoriteLoading,
   }: RecipeCardProps) => {
 
-  console.log("recipeCard rerender");
-
   const handleSaveClick = (e: React.MouseEvent) => {
     if (favoriteLoading) return;
 
@@ -47,7 +45,7 @@ const RecipeCard = (
   const ingredientsString = recipe.ingradients
     ?.map((i) => i.name)
     .join(" + ");
-
+  console.log("recipeCard", recipe);
   return (
     <div className={classNames(styles.card, className)}>
 

@@ -1,0 +1,61 @@
+@use "../../../styles/abstracts" as *;
+
+.section {
+  margin-top: 40px;
+}
+
+.heading {
+  @include section-heading;
+}
+
+.editor {
+  @include flex-column;
+  gap: 14px;
+  padding: 24px;
+  background: var(--color-surface);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.rowLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 90px;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.option {
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+
+  background: var(--color-main-bg);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-duration) ease;
+
+  @include hover {
+    border-color: var(--brand);
+  }
+}
+
+.optionActive {
+  background: var(--brand);
+  color: var(--button-primary-text);
+  border-color: var(--brand);
+}

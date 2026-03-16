@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-class DropdownStore {
+export class DropdownStore {
   categoryOpen = false;
 
   constructor() {
@@ -15,5 +15,3 @@ class DropdownStore {
     this.categoryOpen = false;
   };
 }
-
-export const dropdownStore = new DropdownStore();

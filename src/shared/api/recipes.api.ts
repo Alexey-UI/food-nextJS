@@ -22,6 +22,19 @@ export const getRecipes = async (
   return data;
 };
 
+export const getPantryRecipes = async (): Promise<RecipesResponse> => {
+  const query = qs.stringify(
+    {
+      populate: ["images", "category", "ingradients"],
+      pagination: { page: 1, pageSize: 100 },
+    },
+    { skipNulls: true }
+  );
+
+  const { data } = await axiosInstance.get(`/recipes?${query}`);
+  return data;
+};
+
 export const getRecipeByDocumentId = async (
   documentId: string | Array<string>
 ): Promise<{ data: RecipeDetails }> => {

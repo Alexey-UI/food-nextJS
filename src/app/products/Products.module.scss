@@ -1,0 +1,192 @@
+@use "../../styles/abstracts" as *;
+
+.page {
+  padding-bottom: 80px;
+}
+
+.hero {
+  margin: 36px 0 0;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.ingredientsSection {
+  margin-top: 40px;
+}
+
+.ingredientsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sectionHeading {
+  @include section-heading;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.clearBtn {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--brand);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: opacity var(--transition-duration) ease;
+
+  @include hover {
+    opacity: 0.75;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 130px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--brand);
+    border-radius: 2px;
+  }
+}
+
+.chip {
+  padding: 7px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--color-surface);
+  border: 2px solid transparent;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: all var(--transition-duration) ease;
+
+  @include hover {
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+}
+
+.chipActive {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: rgba(181, 70, 15, 0.06);
+}
+
+.empty {
+  margin-top: 48px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.resultsSection {
+  margin-top: 48px;
+}
+
+.tierCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 12px;
+  background: var(--color-surface);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  color: var(--text-secondary);
+}
+
+.tier--perfect {
+  color: #2a7d4f;
+}
+
+.tier--almost {
+  color: #b5810a;
+}
+
+.tier--partial {
+  color: var(--text-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+.cardWrapper {
+  position: relative;
+  min-width: 0;
+}
+
+.recipeCard {
+  width: 100%;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.badge--perfect {
+  background: rgba(42, 125, 79, 0.12);
+  color: #2a7d4f;
+}
+
+.badge--almost {
+  background: rgba(181, 129, 10, 0.12);
+  color: #b5810a;
+}
+
+.badge--partial {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-secondary);
+}

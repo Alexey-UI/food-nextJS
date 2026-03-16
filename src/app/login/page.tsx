@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/shared/auth/AuthContext";
+import { useAuth } from "@/lib/auth/AuthContext";
 import styles from "./../AuthLayout.module.scss";
 
 export default function LoginPage() {

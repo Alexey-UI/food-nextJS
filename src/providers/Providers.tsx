@@ -3,7 +3,7 @@
 import {useState} from 'react'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 
-import {AuthProvider} from '@/shared/auth/AuthContext'
+import {AuthProvider} from '@/lib/auth/AuthContext'
 import {StoreProvider} from "@/providers/StoreProvider";
 
 export default function Providers({children}: {

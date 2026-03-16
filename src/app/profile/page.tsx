@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 
-import { useAuth } from "@/shared/auth/AuthContext";
+import { useAuth } from "@/lib/auth/AuthContext";
 
 import styles from "./ProfilePage.module.scss";
 

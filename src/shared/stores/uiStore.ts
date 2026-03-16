@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-class UIStore {
+export class uiStore {
   mobileMenuOpen = false;
 
   constructor() {
@@ -15,5 +15,3 @@ class UIStore {
     this.mobileMenuOpen = false;
   }
 }
-
-export const uiStore = new UIStore();

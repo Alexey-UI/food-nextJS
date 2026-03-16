@@ -31,7 +31,6 @@ export const useRecipesQuery = () => {
         categoryId,
       }),
     placeholderData: (prev) => prev,
-
   });
 
   const total = query.data?.meta.pagination.total ?? 0;

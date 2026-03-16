@@ -3,6 +3,25 @@ import type {RecipeDetails, RecipesResponse} from "./types";
 import {GetRecipesParams} from "@/shared/api/recipes.api";
 import qs from "qs";
 
+export const getPantryRecipesServer = async (): Promise<RecipesResponse> => {
+  const query = qs.stringify(
+    {
+      populate: ["images", "category", "ingradients"],
+      pagination: { page: 1, pageSize: 100 },
+    },
+    { skipNulls: true }
+  );
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/recipes?${query}`,
+    { next: { revalidate: 60 } }
+  );
+
+  if (!res.ok) throw new Error("Failed to fetch pantry recipes");
+
+  return res.json();
+};
+
 export const getRecipesServer = async (
   params: GetRecipesParams
 ): Promise<RecipesResponse> => {

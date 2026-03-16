@@ -4,7 +4,7 @@ import type { GetRecipesParams } from "../recipes.api";
 
 export const buildRecipesQuery = (params: GetRecipesParams) => {
   const queryObject: QueryObject = {
-    populate: ["images", "category"],
+    populate: ["images", "category", "ingradients"],
     pagination: {
       page: params.page ?? 1,
       pageSize: params.limit ?? 9,

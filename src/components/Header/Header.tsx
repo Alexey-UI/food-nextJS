@@ -13,7 +13,7 @@ import logoIcon from "@/assets/logoIcon.svg";
 import userIcon from "@/assets/userIcon.svg";
 
 import BurgerButton from "@/components/BurgerButton";
-import { useAuth } from "@/shared/auth/AuthContext";
+import { useAuth } from "@/lib/auth/AuthContext";
 import {useStores} from "@/providers/StoreProvider";
 
 const Header = () => {
@@ -64,10 +64,10 @@ const Header = () => {
             </Link>
 
             <Link
-              href="/menu"
-              className={pathname === "/menu" ? styles.active : ""}
+              href="/wine-pairing"
+              className={pathname === "/wine-pairing" ? styles.active : ""}
             >
-              Menu Items
+              Wine Pairing
             </Link>
 
             <Link

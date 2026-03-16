@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-class SearchStore {
+export class SearchStore {
   value = "";
 
   constructor() {
@@ -15,5 +15,3 @@ class SearchStore {
     this.value = "";
   }
 }
-
-export const searchStore = new SearchStore();

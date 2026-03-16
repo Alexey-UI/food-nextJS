@@ -1,0 +1,22 @@
+@use "../../../styles/abstracts" as *;
+
+.section {
+  margin-top: 48px;
+}
+
+.heading {
+  @include section-heading;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.empty {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-secondary);
+}

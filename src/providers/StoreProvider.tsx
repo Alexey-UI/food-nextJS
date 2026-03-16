@@ -1,16 +1,26 @@
 "use client";
 
-import { createContext, useContext } from "react";
-import { rootStore, RootStore } from "@/shared/stores/rootStore";
+import React, { createContext, useContext, useState } from "react";
+import { RootStore } from "@/shared/stores/rootStore";
 
-const StoreContext = createContext<RootStore>(rootStore);
+const StoreContext = createContext<RootStore | null>(null);
 
-export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
+export function StoreProvider({ children }: { children: React.ReactNode }) {
+  const [store] = useState(() => new RootStore());
+
   return (
-    <StoreContext.Provider value={rootStore}>
+    <StoreContext.Provider value={store}>
       {children}
     </StoreContext.Provider>
   );
-};
+}
 
-export const useStores = () => useContext(StoreContext);
+export function useStores() {
+  const store = useContext(StoreContext);
+
+  if (!store) {
+    throw new Error("StoreProvider is missing");
+  }
+
+  return store;
+}
