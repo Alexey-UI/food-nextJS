@@ -11,6 +11,7 @@ import RecipeCard from "@/components/RecipeCard";
 import type { RecipeListItem } from "@/shared/api/types";
 import { extractIngredients, matchRecipes } from "@/shared/utils/matchRecipes";
 import type { MatchedRecipe, MatchTier } from "@/shared/utils/matchRecipes";
+import { flyToFavorites } from "@/shared/animations/flyToFavorites";
 
 import styles from "./Products.module.scss";
 
@@ -68,14 +69,17 @@ export default function ProductsClient({ token }: Props) {
   }, []);
 
   const handleToggleFavorite = useCallback(
-    (recipe: RecipeListItem) => {
+    (recipe: RecipeListItem, element: Element) => {
       if (!token) {
         router.push("/login");
         return;
       }
+      if (!favorites.includes(recipe.id)) {
+        flyToFavorites(element);
+      }
       toggleFavorite(recipe);
     },
-    [token, toggleFavorite, router]
+    [token, toggleFavorite, favorites, router]
   );
 
   return (

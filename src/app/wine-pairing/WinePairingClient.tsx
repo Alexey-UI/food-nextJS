@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { useFavorites } from "@/shared/hooks/useFavorites";
 import type { RecipeListItem } from "@/shared/api/types";
+import { flyToFavorites } from "@/shared/animations/flyToFavorites";
 
 import WineSelector from "@/components/wine/WineSelector";
 import WineResults from "@/components/wine/WineResults";
@@ -21,10 +22,13 @@ export default observer(function WinePairingClient({ token }: Props) {
   const favoritesState = useFavorites(token);
   const { winePairingStore: store } = useStores();
 
-  const handleToggleFavorite = (recipe: RecipeListItem) => {
+  const handleToggleFavorite = (recipe: RecipeListItem, element: Element) => {
     if (!token) {
       router.push("/login");
       return;
+    }
+    if (!favoritesState.favorites.includes(recipe.id)) {
+      flyToFavorites(element);
     }
     favoritesState.toggleFavorite(recipe);
   };

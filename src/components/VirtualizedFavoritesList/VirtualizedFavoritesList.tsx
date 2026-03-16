@@ -11,7 +11,7 @@ import styles from "./VirtualizedFavoritesList.module.scss";
 type Props = {
   recipes: RecipeListItem[];
   favorites: number[];
-  toggleFavorite: (recipe: RecipeListItem) => void;
+  toggleFavorite: (recipe: RecipeListItem, element: Element) => void;
   loadingId?: number;
   isLoading: boolean;
 };

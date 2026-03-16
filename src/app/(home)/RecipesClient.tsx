@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import styles from "./page.module.scss";
 
 import CategorySelect from "@/components/CategorySelect";
@@ -10,13 +11,27 @@ import SearchBar from "@/components/SearchBar";
 import {useRecipesQuery} from "@/shared/hooks/useRecipesQuery";
 import {useResponsivePageSize} from "@/shared/hooks/useResponsivePageSize";
 import {useFavorites} from "@/shared/hooks/useFavorites";
+import type {RecipeListItem} from "@/shared/api/types";
+import {flyToFavorites} from "@/shared/animations/flyToFavorites";
 
 
 export default function RecipesClient({ token }: { token: string | null }) {
+  const router = useRouter();
   useResponsivePageSize();
 
   const recipesState = useRecipesQuery();
   const favoritesState = useFavorites(token);
+
+  const handleToggleFavorite = (recipe: RecipeListItem, element: Element) => {
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+    if (!favoritesState.favorites.includes(recipe.id)) {
+      flyToFavorites(element);
+    }
+    favoritesState.toggleFavorite(recipe);
+  };
 
   return (
     <>
@@ -38,7 +53,7 @@ export default function RecipesClient({ token }: { token: string | null }) {
           <RecipesSlider
             {...recipesState}
             favorites={favoritesState.favorites}
-            toggleFavorite={favoritesState.toggleFavorite}
+            toggleFavorite={handleToggleFavorite}
             loadingId={favoritesState.loadingId}
           />
         </div>

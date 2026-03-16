@@ -10,13 +10,12 @@ import styles from "./RecipeCard.module.scss";
 
 import Button from "@/components/Button";
 import type {RecipeListItem} from "@/shared/api/types";
-import {flyToFavorites} from "@/shared/animations/flyToFavorites";
 
 export type RecipeCardProps = {
   className?: string;
   recipe: RecipeListItem;
   isFavorite: boolean;
-  toggleFavorite: (recipe: RecipeListItem) => void;
+  toggleFavorite: (recipe: RecipeListItem, element: Element) => void;
   favoriteLoading: boolean;
 };
 
@@ -31,12 +30,7 @@ const RecipeCard = (
 
   const handleSaveClick = (e: React.MouseEvent) => {
     if (favoriteLoading) return;
-
-    if (!isFavorite) {
-      flyToFavorites(e.currentTarget);
-    }
-
-    toggleFavorite(recipe);
+    toggleFavorite(recipe, e.currentTarget);
   };
 
   const imageUrl =
@@ -45,7 +39,7 @@ const RecipeCard = (
   const ingredientsString = recipe.ingradients
     ?.map((i) => i.name)
     .join(" + ");
-  console.log("recipeCard", recipe);
+
   return (
     <div className={classNames(styles.card, className)}>
 
