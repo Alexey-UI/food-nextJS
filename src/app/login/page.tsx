@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth/AuthContext";
@@ -12,13 +12,22 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
 
-    await login(email, password);
-
-    router.push("/");
+    try {
+      await login(email, password);
+      router.push("/");
+    } catch {
+      setError("Invalid email or password. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,13 +51,15 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button className={styles.button} type="submit">
-            Login
+          {error && <p className={styles.error}>{error}</p>}
+
+          <button className={styles.button} type="submit" disabled={loading}>
+            {loading ? "Logging in…" : "Login"}
           </button>
         </form>
 
         <p className={styles.footerText}>
-          Нет аккаунта? <Link href="/register">Register</Link>
+          No account? <Link href="/register">Register</Link>
         </p>
       </div>
     </div>

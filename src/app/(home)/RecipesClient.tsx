@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import styles from "./page.module.scss";
 
 import CategorySelect from "@/components/CategorySelect";
@@ -13,6 +14,7 @@ import {useResponsivePageSize} from "@/shared/hooks/useResponsivePageSize";
 import {useFavorites} from "@/shared/hooks/useFavorites";
 import type {RecipeListItem} from "@/shared/api/types";
 import {flyToFavorites} from "@/shared/animations/flyToFavorites";
+import {useAuth} from "@/lib/auth/AuthContext";
 
 
 export default function RecipesClient({ token }: { token: string | null }) {
@@ -21,9 +23,10 @@ export default function RecipesClient({ token }: { token: string | null }) {
 
   const recipesState = useRecipesQuery();
   const favoritesState = useFavorites(token);
+  const { isAuthenticated } = useAuth();
 
   const handleToggleFavorite = (recipe: RecipeListItem, element: Element) => {
-    if (!token) {
+    if (!isAuthenticated) {
       router.push("/login");
       return;
     }
@@ -41,7 +44,7 @@ export default function RecipesClient({ token }: { token: string | null }) {
         <div className="container">
           <div className={styles.slogan}>
             Find the perfect food and{" "}
-            <span className={styles.underlined}>drink ideas</span> for every
+            <Link href="/?categoryId=21" className={styles.underlined}>drink ideas</Link> for every
             occasion
           </div>
 

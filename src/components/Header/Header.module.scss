@@ -84,6 +84,30 @@
   height: 21px;
 }
 
+.heartWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+  bottom: -6px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: #e02020;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  pointer-events: none;
+}
+
 @media (max-width: 1024px) {
   .header__nav {
     position: absolute;

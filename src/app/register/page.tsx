@@ -13,13 +13,22 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+    setLoading(true);
 
-    await register(username, email, password);
-
-    router.push("/");
+    try {
+      await register(username, email, password);
+      router.push("/");
+    } catch {
+      setError("Registration failed. Please check your details and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,13 +59,15 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button className={styles.button} type="submit">
-            Register
+          {error && <p className={styles.error}>{error}</p>}
+
+          <button className={styles.button} type="submit" disabled={loading}>
+            {loading ? "Creating account…" : "Register"}
           </button>
         </form>
 
         <p className={styles.footerText}>
-          Уже есть аккаунт? <Link href="/login">Login</Link>
+          Already have an account? <Link href="/login">Login</Link>
         </p>
       </div>
     </div>

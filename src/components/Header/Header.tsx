@@ -14,7 +14,9 @@ import userIcon from "@/assets/userIcon.svg";
 
 import BurgerButton from "@/components/BurgerButton";
 import { useAuth } from "@/lib/auth/AuthContext";
-import {useStores} from "@/providers/StoreProvider";
+import { useStores } from "@/providers/StoreProvider";
+import { useFavorites } from "@/shared/hooks/useFavorites";
+import { getToken } from "@/lib/auth/authStorage";
 
 const Header = () => {
   const { uiStore } = useStores();
@@ -23,6 +25,7 @@ const Header = () => {
   const pathname = usePathname();
 
   const { isAuthenticated, isLoading } = useAuth();
+  const { favorites } = useFavorites(isAuthenticated ? getToken() : null);
 
   return (
     <header className={styles.header}>
@@ -80,15 +83,22 @@ const Header = () => {
         </div>
 
         <div className={styles.header__actions}>
-          <Image
-            id="favorites-icon"
-            src={heartIcon}
-            alt="Favorites"
-            className={classNames(styles.header__icon, styles.header__heart)}
-            onClick={() =>
-              router.push(isAuthenticated ? "/favorites" : "/login")
-            }
-          />
+          <div
+            className={styles.heartWrapper}
+            onClick={() => router.push(isAuthenticated ? "/favorites" : "/login")}
+          >
+            <Image
+              id="favorites-icon"
+              src={heartIcon}
+              alt="Favorites"
+              className={classNames(styles.header__icon, styles.header__heart)}
+            />
+            {favorites.length > 0 && (
+              <span className={styles.badge}>
+                {favorites.length > 99 ? "99+" : favorites.length}
+              </span>
+            )}
+          </div>
 
           <Image
             src={userIcon}
